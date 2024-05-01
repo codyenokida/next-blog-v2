@@ -1,0 +1,26 @@
+.modal {
+  padding: 1rem;
+  overflow: hidden;
+  background-color: rgba(var(--background-start-rgb));
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.label {
+  margin-top: 1rem;
+}
+
+.textarea {
+  border: 1px solid rgba(var(--foreground-rgb));
+  font-size: inherit;
+  width: 20rem;
+  height: 20rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

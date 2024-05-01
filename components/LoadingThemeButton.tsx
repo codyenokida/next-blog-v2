@@ -1,5 +1,7 @@
+import styles from "./SetThemeButton.module.css";
+
 const LoadingThemeButton = () => {
-  return <button style={{ width: "10ch", height: "auto" }}>loading...</button>;
+  return <button className={styles.button}>☁️</button>;
 };
 
 export default LoadingThemeButton;

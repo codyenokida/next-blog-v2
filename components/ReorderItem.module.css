@@ -1,0 +1,42 @@
+.item {
+  position: relative;
+  white-space: pre-line;
+  margin-bottom: 1rem;
+  width: calc(100% - 0.5rem);
+}
+
+.item:before {
+  content: ".";
+  position: absolute;
+  top: -10px;
+  left: -1.5rem;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ac14c2;
+  text-shadow: 0 5px #ac14c2, 0 10px #ac14c2, 5px 0 #ac14c2, 5px 5px #ac14c2,
+    5px 10px #ac14c2;
+}
+
+.item:hover {
+  cursor: grab;
+}
+
+.item:active {
+  cursor: grabbing;
+}
+
+.img {
+  width: calc(100% - 2rem);
+  pointer-events: none;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(var(--foreground-rgb));
+  border-radius: 50%;
+}

@@ -1,5 +1,7 @@
 "use client";
+
 import { useState, useEffect } from "react";
+import styles from "./SetThemeButton.module.css";
 
 const SetThemeButton = () => {
   const [theme, setTheme] = useState(global.window?.__theme || "light");
@@ -15,8 +17,8 @@ const SetThemeButton = () => {
   }, []);
 
   return (
-    <button style={{ width: "10ch", height: "auto" }} onClick={toggleTheme}>
-      {isDark ? "dark" : "light"}
+    <button className={styles.button} onClick={toggleTheme}>
+      {isDark ? "🌙" : "🔆"}
     </button>
   );
 };

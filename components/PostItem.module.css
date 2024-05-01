@@ -1,0 +1,24 @@
+.item {
+  width: 100%;
+}
+
+.image {
+  /* aspect-ratio: 1 / 1; */
+  width: 100%;
+  height: 14rem;
+}
+
+.image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(var(--foreground-rgb));
+}
+
+.title {
+  margin-top: 0.5rem;
+}
+
+.date {
+  color: rgba(var(--color-gray));
+}
