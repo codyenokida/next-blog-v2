@@ -30,7 +30,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <GoogleAnalytics
-        gaId={process.env.NEXT_PUBLIC_MEASUREMENT_ID as string}
+        gaId={process.env.MEASUREMENT_ID as string}
       />
       <body className={classNames(ibm.className, jetBrains.variable)}>
         {children}
