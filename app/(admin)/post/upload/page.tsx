@@ -1,32 +1,28 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import Link from "next/link";
-import imageCompression from "browser-image-compression";
-import { v4 as uuidv4 } from "uuid";
 import { Reorder } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import Button from "@/components/Button";
-// import Modal from "@/components/Modal";
-import ReorderItem from "@/components/ReorderItem";
-// import ImagePlaceholder from "@/components/Icons/ImagePlaceholder";
-
 import { tagsForEdit } from "@/utils/const";
-import {
-  compressImage,
-  formatDate,
-  isValidSpotifyTrackURL,
-} from "@/utils/helper";
+import { compressImage, isValidSpotifyTrackURL } from "@/utils/helper";
 
 import { uploadImageToStorage } from "@/lib/firebase/storage";
-import { getPostFromIdCached, uploadPost } from "@/lib/firebase/firestore";
+import { uploadPost } from "@/lib/firebase/firestore";
 
-import styles from "./page.module.css";
 import useUserSession from "@/hooks/useUserSession";
+
 import ImageModal from "@/components/ImageModal";
 import TextModal from "@/components/TextModal";
+import LinkButton from "@/components/LinkButton";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import Button from "@/components/Button";
+import ReorderItem from "@/components/ReorderItem";
+
+import styles from "./page.module.css";
+import { Timestamp } from "firebase/firestore";
+import Image from "next/image";
 
 export default function Page() {
   const router = useRouter();
@@ -51,6 +47,7 @@ export default function Page() {
   const hiddenFileInput = useRef<any>(null);
   const tagRef = useRef<any>(null);
   const titleRef = useRef<any>(null);
+  const idRef = useRef<any>(null);
   const spotifyLinkRef = useRef<any>(null);
   const startDateRef = useRef<any>(null);
   const endDateRef = useRef<any>(null);
@@ -69,6 +66,9 @@ export default function Page() {
     if (form.tag) {
       updateFormError("tag", "");
     }
+    if (form.spotify && isValidSpotifyTrackURL(form.spotify)) {
+      updateFormError("spotify", "");
+    }
     if (dateType === "single" && form.startDate) {
       updateFormError("date", "");
     }
@@ -81,12 +81,10 @@ export default function Page() {
     if (form.content) {
       updateFormError("content", "");
     }
+    if (form.preview) {
+      updateFormError("preview", "");
+    }
   }, [form, dateType]);
-
-  const handleClear = () => {
-    setForm({} as Form);
-    setFormError({} as FormError);
-  };
 
   /**
    * Helper function to update controlled form state
@@ -125,6 +123,7 @@ export default function Page() {
   const handleCloseModal = () => {
     setOpenImageModal(false);
     setOpenTextModal(false);
+    setOpenPostConfirmationModal(false);
   };
 
   const handleAddContent = (newContent: TextContent | TempImageContent) => {
@@ -213,47 +212,44 @@ export default function Page() {
     );
 
     // Upload all content images
-    const contentToUpload = await Promise.all(
-      form.content.map(async (section: any) => {
+    const contentToUpload: Content[] = await Promise.all(
+      form.content.map(async (section: FormContent) => {
         if (section.type === "text") {
           return section;
         } else if (section.type === "image") {
-          // If an image already exists, skip the upload process
-          if (section.imageUrl) {
-            return section;
-          }
-          const imageID = section.id;
-          const imageFile = section.tempImage;
-          const storageImageUrl = await uploadImageToStorage(
-            form.id,
-            imageID,
-            imageFile
-          );
-          return {
-            id: section.id,
-            type: section.type,
-            imageUrl: storageImageUrl,
-            imageCaption: section.caption,
+          const { id, tempImageFile, type, caption, alt } = section;
+          const storageImageUrl =
+            (await uploadImageToStorage(form.id, id, tempImageFile)) || "";
+          const imageContent: ImageContent = {
+            id: id,
+            type: type,
+            imageURL: storageImageUrl,
+            caption: caption,
+            alt: alt,
           };
+          return imageContent;
         }
+        return {} as Content;
       })
     );
 
-    // Generate Posted Date
-    const datePosted = new Date();
-
     // Generate Metadata
-    const postToUpload = {
+    const postToUpload: BlogPostData = {
       id: form.id,
       title: form.title,
       content: contentToUpload,
-      datePosted,
+      datePosted: Timestamp.fromDate(new Date()),
       dateType,
-      startDate: form.startDate ? new Date(form.startDate) : null,
-      endDate: form.endDate ? new Date(form.endDate) : null,
-      category: form.tag,
-      spotifyLink: form.spotify || null,
-      thumbnailImage: thumbnailUrl,
+      startDate: Timestamp.fromDate(
+        form.startDate ? new Date(form.startDate) : new Date()
+      ),
+      endDate: Timestamp.fromDate(
+        form.endDate ? new Date(form.endDate) : new Date()
+      ),
+      tag: form.tag,
+      spotify: form.spotify,
+      thumbnailURL: thumbnailUrl,
+      preview: form.preview,
     };
 
     await uploadPost(form.id, postToUpload);
@@ -287,9 +283,7 @@ export default function Page() {
 
   return (
     <main className={styles.main}>
-      <Link href="/dashboard" passHref className={styles.backToHome}>
-        <Button text="← Back to Dashboard" />
-      </Link>
+      <LinkButton href="/dashboard" text="← Back to Dashboard" />
       <h1>Upload Post 🛠️</h1>
       <form className={styles.form} onSubmit={onFormSubmit}>
         <div className={styles.tag}>
@@ -317,9 +311,19 @@ export default function Page() {
           )}
         </div>
         <div>
+          <label>Slug (ID):</label>
+          <input
+            className={styles.input}
+            placeholder="very-first-post"
+            onChange={(e) => updateFormValue(e, "id")}
+            ref={idRef}
+          />
+          {formError.id && <span className={styles.error}>{formError.id}</span>}
+        </div>
+        <div>
           <label>Title:</label>
           <input
-            className={styles.title}
+            className={styles.input}
             placeholder="The Grand Adventure!"
             onChange={(e) => updateFormValue(e, "title")}
             ref={titleRef}
@@ -331,9 +335,9 @@ export default function Page() {
         <div>
           <label>Spotify Link:</label>
           <input
-            className={styles.spotify}
+            className={styles.input}
             placeholder="https://open.spotify.com/track/7E4qUlNYocWix5FKBdw5CN?si=cf9dd73b32424903"
-            onChange={(e) => updateFormValue(e, "spotifyLink")}
+            onChange={(e) => updateFormValue(e, "spotify")}
             ref={spotifyLinkRef}
           />
           {formError.spotify && (
@@ -413,7 +417,7 @@ export default function Page() {
           {form.thumbnail ? (
             <>
               <div className={styles.thumbnail}>
-                <img
+                <Image
                   className={styles.image}
                   src={URL.createObjectURL(form.thumbnail)}
                   alt="Thumbnail preview"
@@ -501,6 +505,13 @@ export default function Page() {
         open={openTextModal}
         handleClose={handleCloseModal}
         handleAddContent={handleAddContent}
+      />
+      <ConfirmationModal
+        open={openPostConfirmationModal}
+        handleClose={handleCloseModal}
+        uploadPost={confirmSubmission}
+        preview={form.preview}
+        updateFormValue={updateFormValue}
       />
     </main>
   );

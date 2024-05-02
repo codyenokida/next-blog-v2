@@ -2,6 +2,14 @@
   width: 100%;
 }
 
+.item:hover {
+  text-decoration: none;
+}
+
+.item:hover .title {
+  text-decoration: underline rgba(var(--color-link));
+}
+
 .image {
   /* aspect-ratio: 1 / 1; */
   width: 100%;
@@ -21,4 +29,24 @@
 
 .date {
   color: rgba(var(--color-gray));
+  text-decoration: none;
+}
+
+.date:hover {
+  text-decoration: none;
+}
+
+.preview {
+  color: rgba(var(--color-gray));
+  margin-top: 0.5rem;
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.preview:hover {
+  text-decoration: none !important;
 }

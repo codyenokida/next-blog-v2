@@ -16,6 +16,7 @@ import {
   setDoc,
   deleteDoc,
   getDoc,
+  Timestamp,
 } from "firebase/firestore";
 
 import { db } from "./firebase";
@@ -36,7 +37,7 @@ function applyQueryFilters(
     q = query(q, where("id", "==", id));
   }
   if (tag) {
-    q = query(q, where("category", "==", tag));
+    q = query(q, where("tag", "==", tag));
   }
   if (order) {
     q = query(q, orderBy("datePosted", order));
@@ -76,7 +77,7 @@ export async function getBlogPostPreview(
   q: FirestoreBlogPostPreviewQuery = {}
 ) {
   try {
-    let queryRef = query(collection(db, "posts"));
+    let queryRef = query(collection(db, "post-previews"));
     queryRef = applyQueryFilters(queryRef, q);
     const collectionSnap = await getDocs(queryRef);
     const collectionArray = collectionSnap?.docs?.map((doc) => doc.data());
@@ -86,6 +87,7 @@ export async function getBlogPostPreview(
     if (collectionArray && collectionArray.length)
       return collectionArray as BlogPostPreview[];
   } catch (e) {
+    console.error(e);
     return null;
   }
 }
@@ -98,7 +100,7 @@ export async function getBlogPostPreview(
  */
 export async function getPostFromId(postId: string) {
   if (!postId) return;
-  let queryRef = query(collection(db, "blog-post"));
+  let queryRef = query(collection(db, "post"));
   queryRef = applyQueryFilters(queryRef, { id: postId });
   const collectionSnap = await getDocs(queryRef);
   const collectionArray = collectionSnap?.docs?.map((doc) => doc.data());
@@ -113,7 +115,7 @@ export async function getPostFromId(postId: string) {
  * @returns
  */
 export async function getPosts(q: FirestoreBlogPostPreviewQuery = {}) {
-  let queryRef = query(collection(db, "blog-post"));
+  let queryRef = query(collection(db, "post"));
   queryRef = applyQueryFilters(queryRef, q);
   const collectionSnap = await getDocs(queryRef);
   const collectionArray = collectionSnap?.docs?.map((doc) =>
@@ -151,16 +153,18 @@ export async function postComment(id: string, author: string, content: string) {
   });
 }
 
-export async function uploadPost(id: string, post: any) {
+export async function uploadPost(id: string, post: BlogPostData) {
   if (!id) return;
-  const blogPostItemRef = doc(db, "posts", `${id}`);
-  const blogPostContentRef = doc(db, "blog-post", `${id}`);
-  const item = {
+  // const blogPostItemRef = doc(db, "posts", `${id}`);
+  const blogPostItemRef = doc(db, "post-previews", `${id}`);
+  const blogPostContentRef = doc(db, "post", `${id}`);
+  const item: BlogPostPreview = {
     id: post.id,
-    datePosted: post.datePosted,
+    datePosted: post.datePosted as Timestamp, // Date gets converted in Timestamp in Firestore
     title: post.title,
-    category: post.category,
-    thumbnail: post.thumbnailImage,
+    thumbnailURL: post.thumbnailURL,
+    preview: post.preview,
+    tag: post.tag,
   };
   setDoc(blogPostItemRef, { ...item }, { merge: true });
   setDoc(blogPostContentRef, { ...post }, { merge: true });

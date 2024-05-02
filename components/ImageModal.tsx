@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import styles from "./ImageModal.module.css";
 import { compressImage } from "@/utils/helper";
 import Button from "@/components/Button";
+import Image from "next/image";
 
 export default function ImageModal({
   open,
@@ -33,7 +34,7 @@ export default function ImageModal({
 
   const addImageToContent = () => {
     let item = {} as TempImageContent;
-    if (image && alt && caption) {
+    if (image && alt) {
       item = {
         type: "image",
         id: uuidv4(),
@@ -57,7 +58,7 @@ export default function ImageModal({
         {image ? (
           <>
             <div className={styles.picture}>
-              <img
+              <Image
                 className={styles.image}
                 src={URL.createObjectURL(image)}
                 alt="Image to upload"

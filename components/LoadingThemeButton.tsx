@@ -1,7 +1,11 @@
 import styles from "./SetThemeButton.module.css";
 
-const LoadingThemeButton = () => {
-  return <button className={styles.button}>☁️</button>;
+const LoadingThemeButton = ({ style }: any) => {
+  return (
+    <button className={styles.button} style={style}>
+      ☁️
+    </button>
+  );
 };
 
 export default LoadingThemeButton;

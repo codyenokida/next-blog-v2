@@ -1,5 +1,7 @@
 .button {
+  color: rgba(var(--foreground-rgb));
   border: 1px solid rgba(var(--foreground-rgb));
   padding: 1rem;
   background-color: transparent;
+  cursor: pointer;
 }

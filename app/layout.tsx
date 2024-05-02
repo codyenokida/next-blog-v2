@@ -12,7 +12,7 @@ const jetBrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetBrains",
 });
-const ibm = IBM_Plex_Mono({ weight: "400", subsets: ["latin"] });
+const ibm = IBM_Plex_Mono({ weight: ["400", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "A Small Peek into my Life.",

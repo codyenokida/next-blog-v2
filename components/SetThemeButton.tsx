@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "./SetThemeButton.module.css";
 
-const SetThemeButton = () => {
+const SetThemeButton = ({ style }: any) => {
   const [theme, setTheme] = useState(global.window?.__theme || "light");
 
   const isDark = theme === "dark";
@@ -17,7 +17,7 @@ const SetThemeButton = () => {
   }, []);
 
   return (
-    <button className={styles.button} onClick={toggleTheme}>
+    <button className={styles.button} style={style} onClick={toggleTheme}>
       {isDark ? "🌙" : "🔆"}
     </button>
   );

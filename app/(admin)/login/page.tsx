@@ -24,7 +24,7 @@ export default function Page() {
 
   useEffect(() => {
     const getDocument = async () => {
-      if (user) {
+      if (user && router) {
         const role = await getUserRole(user.email);
         if (role === "Admin") {
           router.push("/dashboard");
@@ -33,7 +33,7 @@ export default function Page() {
     };
 
     getDocument();
-  }, [user]);
+  }, [user, router]);
 
   return (
     <main className={styles.main}>

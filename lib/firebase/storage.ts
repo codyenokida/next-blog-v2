@@ -6,18 +6,18 @@ import { storage } from "./firebase";
 /**
  * Upload image to storage
  * @param postId
- * @param image
+ * @param imageId
  * @returns
  */
 export async function uploadImageToStorage(
   postId: string,
-  imageID: string,
+  imageId: string,
   image: Blob | undefined
 ) {
   if (!postId || !image) {
-    return;
+    return "";
   }
-  const storageRef = ref(storage, `images/${postId}/${imageID}`);
+  const storageRef = ref(storage, `images/${postId}/${imageId}`);
   const task = await uploadBytes(storageRef, image);
   const url = await getDownloadURL(task.ref);
   return url;

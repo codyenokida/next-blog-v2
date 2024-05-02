@@ -19,8 +19,10 @@
   --button-idle: 0, 0, 0;
   --button-active: 169, 216, 245;
   --color-gray: 131, 131, 131;
-  --color-link: 132 212 255;
+  --color-link: 66, 136, 195;
   --color-error: 239 87 87;
+
+  --color-reorder: #ac14c2;
 }
 
 :root[data-theme="dark"] {
@@ -32,6 +34,8 @@
 
   --card-rgb: 100, 100, 100;
   --card-border-rgb: 200, 200, 200;
+
+  --color-link: 15, 130, 175;
 }
 
 * {
@@ -69,7 +73,12 @@ button {
 
 h1,
 h2 {
+  color: rgba(var(--foreground-rgb));
   font-family: var(--font-jetBrains);
+}
+
+p {
+  margin: 1rem 0;
 }
 
 input,
@@ -79,6 +88,10 @@ option {
 }
 
 a {
-  color: blue;
+  color: rgba(var(--color-link));
+  font-weight: 600;
+}
+
+a:hover {
   text-decoration: underline;
 }

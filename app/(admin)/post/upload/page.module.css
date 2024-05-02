@@ -37,26 +37,7 @@
   width: 100%;
 }
 
-/* input[type="text"],
-input[type="date"] {
-  margin-top: 0.5rem;
-} */
-
-.title {
-  display: flex;
-  width: calc(100% - 8px);
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(var(--foreground-rgb));
-  border-radius: 0;
-}
-
-.spotify {
+.input {
   display: flex;
   width: calc(100% - 8px);
   height: 2rem;
@@ -86,9 +67,11 @@ input[type="date"] {
   border: 1px solid rgba(var(--foreground-rgb));
   padding: 0.5rem 1rem;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .dateButton.active {
+  color: rgba(var(--background-start-rgb));
   background-color: rgba(var(--button-active));
 }
 
@@ -96,6 +79,7 @@ input[type="date"].date {
   border: 1px solid rgba(var(--foreground-rgb));
   background-color: transparent;
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 .thumbnail {
@@ -130,106 +114,5 @@ input[type="date"].date {
 .list {
   list-style-type: none;
   padding: 0;
-  padding-left: 1.25rem;
+  padding-left: 0.25rem;
 }
-
-/* .date {
-  .container {
-    .dateType {
-      margin-top: 0.5rem;
-      display: flex;
-      gap: 1rem;
-
-      .active {
-        background-color: $green;
-      }
-    }
-
-    input[type="date"] {
-      height: 2rem;
-      background-color: transparent;
-      padding: 0.5rem 1rem;
-    }
-  }
-}
-
-.thumbnail {
-  .imageFilled {
-    margin-top: 0.5rem;
-    position: relative;
-    display: flex;
-    gap: 0.5rem;
-
-    img {
-      object-fit: contain;
-      width: 13rem;
-      height: 13rem;
-    }
-
-    button {
-      height: 4rem;
-    }
-  }
-
-  .image {
-    margin-top: 0.5rem;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 13rem;
-    height: 13rem;
-
-    input {
-      cursor: pointer;
-      opacity: 0;
-      position: absolute;
-      width: 13rem;
-      height: 12.5rem;
-      top: 0;
-      left: 0;
-    }
-
-    .placeholder {
-      width: 13rem;
-      height: 13rem;
-
-      svg {
-        width: 85%;
-        height: auto;
-      }
-
-      p {
-        margin: 0;
-      }
-    }
-  }
-}
-
-.content {
-  .items {
-    ul {
-      list-style-type: none;
-      padding: 0;
-      padding-left: 1.25rem;
-
-      li {
-        margin-bottom: 1rem;
-        width: calc(100% - 0.5rem);
-
-        cursor: grab;
-        cursor: -webkit-grab;
-        cursor: -moz-grab;
-
-        &:active {
-          cursor: grabbing;
-        }
-      }
-    }
-  }
-
-  .buttons {
-    margin-top: 0.5rem;
-  }
-} */

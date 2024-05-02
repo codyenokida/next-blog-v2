@@ -20,6 +20,7 @@ declare global {
     datePosted: Timestamp;
     thumbnailURL: string;
     title: string;
+    preview: string;
   }
 
   interface TagButtonProps {
@@ -55,8 +56,8 @@ declare global {
   interface ImageContent {
     type: "image";
     id: string;
-    imageURL?: string;
-    alt?: string;
+    imageURL: string;
+    alt: string;
     caption?: string;
   }
 
@@ -72,11 +73,12 @@ declare global {
     thumbnailURL: string;
     tag: string;
     spotify: string;
-    date: "single" | "range";
+    dateType: "single" | "range";
     startDate: Timestamp;
     endDate?: Timestamp;
     datePosted: Timestamp;
     content: Content[];
+    preview: string;
   }
 
   interface BlogPostPreview {
@@ -97,6 +99,8 @@ declare global {
     caption: string;
   }
 
+  type FormContent = TempImageContent | TextContent;
+
   interface Form {
     id: string;
     title: string;
@@ -105,7 +109,8 @@ declare global {
     spotify: string;
     startDate: string;
     endDate?: string;
-    content: any[];
+    content: FormContent[];
+    preview: string;
   }
 
   interface FormError {
@@ -116,7 +121,10 @@ declare global {
     spotify?: string;
     date?: string;
     content?: string;
+    preview?: string;
   }
+
+  // Firestore Queries
 
   interface FirestoreUsersQuery {
     id?: string;

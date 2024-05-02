@@ -1,7 +1,8 @@
 .modal {
-  padding: 1rem;
+  padding: 2rem;
   overflow: hidden;
   background-color: rgba(var(--background-start-rgb));
+  color: rgba(var(--foreground-rgb));
 }
 
 .title {
@@ -9,16 +10,12 @@
   margin-bottom: 1rem;
 }
 
-.label {
-  margin-top: 1rem;
-}
-
 .textarea {
   border: 1px solid rgba(var(--foreground-rgb));
   font-size: inherit;
-  width: 20rem;
+  width: 100%;
   height: 20rem;
-  padding: 0.25rem
+  padding: 0.25rem;
 }
 
 .buttons {

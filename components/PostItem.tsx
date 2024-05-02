@@ -10,6 +10,7 @@ export default function PostItem({
   datePosted,
   thumbnailURL,
   title,
+  preview,
 }: PostItemProps) {
   return (
     <Link className={styles.item} key={id} href={`/post/${id}`}>
@@ -24,6 +25,7 @@ export default function PostItem({
       </div>
       <div className={styles.text}>
         <h2 className={styles.title}>{title}</h2>
+        <p className={styles.preview}>{preview}</p>
         <p className={styles.date}>{formatDate(datePosted.toDate())}</p>
         {/* <Link className={styles.link} key={id} href={`/post/${id}`}>
           Read here ↦

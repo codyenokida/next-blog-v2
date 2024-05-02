@@ -9,6 +9,7 @@
 }
 
 .label {
+  color: rgba(var(--foreground-rgb));
   margin-top: 1rem;
 }
 
@@ -25,6 +26,7 @@
   justify-content: center;
   background-color: transparent;
   border: 1px dashed rgba(var(--foreground-rgb));
+  color: rgba(var(--foreground-rgb));
 
   width: 13rem;
   height: 13rem;
@@ -44,4 +46,9 @@
   height: 13rem;
   top: 0;
   left: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
 }

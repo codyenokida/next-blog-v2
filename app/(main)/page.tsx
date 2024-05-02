@@ -4,10 +4,13 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 import LoadingThemeButton from "@/components/LoadingThemeButton";
-import { tagsForRender } from "@/utils/const";
+import { tags, tagsForEdit, tagsForRender } from "@/utils/const";
 import TagButton from "@/components/TagButton";
 import { useEffect, useState } from "react";
-import { getBlogPostPreviewCached } from "@/lib/firebase/firestore";
+import {
+  getBlogPostPreview,
+  getBlogPostPreviewCached,
+} from "@/lib/firebase/firestore";
 import PostItem from "@/components/PostItem";
 
 const orderBySwap = {
@@ -32,9 +35,8 @@ export default function Page() {
   useEffect(() => {
     const getDocument = async () => {
       setLoading(true);
-      const tag =
-        activeTagIndex !== 0 ? tagsForRender[activeTagIndex] : undefined;
-      const data = await getBlogPostPreviewCached({
+      const tag = activeTagIndex !== 0 ? tags[activeTagIndex] : undefined;
+      const data = await getBlogPostPreview({
         tag,
         order: orderBy,
       });
@@ -63,7 +65,7 @@ export default function Page() {
 
       <p className={styles.subtitle}>
         Unfiltered thoughts and experiences of my day to
-        day.「榎田岬田の人生観」
+        day.「榎田岬太の人生観」
       </p>
 
       <div className={styles.tags}>

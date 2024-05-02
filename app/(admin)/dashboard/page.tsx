@@ -25,7 +25,7 @@ export default function Page() {
     };
 
     getDocument();
-  }, [user]);
+  }, [user, router]);
 
   if (admin) {
     return (
