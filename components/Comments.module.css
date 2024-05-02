@@ -1,0 +1,38 @@
+.noResult {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(var(--foreground-rgb));
+}
+
+.textarea {
+  height: 6rem;
+  margin-bottom: 1rem;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+}
+
+.author {
+  font-weight: 700;
+}
+
+.datePosted {
+  color: rgba(var(--color-gray));
+}
+
+.content {
+  white-space: pre-line;
+}

@@ -13,7 +13,12 @@ declare global {
   /**
    * Component Prop Types
    */
-  interface PostItemProps {
+
+  interface PostPreviewSkeletonProps {
+    id: number;
+  }
+
+  interface PostPreviewProps {
     id: string;
     datePosted: Timestamp;
     thumbnailURL: string;
@@ -59,8 +64,13 @@ declare global {
     caption?: string;
   }
 
+  interface CommentData {
+    id: string;
+    comments: Comment[];
+  }
+
   interface Comment {
-    datePosted: string;
+    datePosted: Timestamp;
     author: string;
     content: string;
   }
@@ -132,5 +142,9 @@ declare global {
     id?: string;
     tag?: string;
     order?: "asc" | "desc";
+  }
+
+  interface FirestoreBlogPostCommentsQuery {
+    id: string;
   }
 }

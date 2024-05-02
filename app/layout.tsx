@@ -5,6 +5,8 @@ import classNames from "classnames";
 
 import ThemeScript from "@/lib/ThemeScript";
 
+import Footer from "@/components/Footer";
+
 import "./globals.css";
 
 const jetBrains = JetBrains_Mono({
@@ -34,6 +36,7 @@ export default function RootLayout({
       />
       <body className={classNames(ibm.className, jetBrains.variable)}>
         {children}
+        <Footer />
       </body>
     </html>
   );

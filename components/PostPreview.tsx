@@ -3,15 +3,15 @@ import Image from "next/image";
 
 import { formatDate } from "@/utils/helper";
 
-import styles from "./PostItem.module.css";
+import styles from "./PostPreview.module.css";
 
-export default function PostItem({
+export default function PostPreview({
   id,
   datePosted,
   thumbnailURL,
   title,
   preview,
-}: PostItemProps) {
+}: PostPreviewProps) {
   return (
     <Link className={styles.item} key={id} href={`/post/${id}`}>
       <div className={styles.image}>
@@ -27,9 +27,6 @@ export default function PostItem({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.preview}>{preview}</p>
         <p className={styles.date}>{formatDate(datePosted.toDate())}</p>
-        {/* <Link className={styles.link} key={id} href={`/post/${id}`}>
-          Read here ↦
-        </Link> */}
       </div>
     </Link>
   );

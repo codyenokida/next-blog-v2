@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-import { getBlogPostPreview } from "@/lib/firebase/firestore";
+import { getBlogPostPreview, migrateComments } from "@/lib/firebase/firestore";
 
 import LoadingThemeButton from "@/components/LoadingThemeButton";
 import TagButton from "@/components/TagButton";
-import PostItem from "@/components/PostItem";
+import PostPreview from "@/components/PostPreview";
+import PostPreviewSkeleton from "@/components/PostPreviewSkeleton";
 
 import { tags, tagsForRender } from "@/utils/const";
 
 import styles from "./page.module.css";
+import { wait } from "@/utils/helper";
 
 const orderBySwap = {
   asc: "desc",
@@ -26,7 +28,7 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
 
 export default function Page() {
   const [posts, setPosts] = useState<BlogPostPreview[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [orderBy, setOrderBy] = useState<"asc" | "desc">("desc");
   const [activeTagIndex, setActiveTagIndex] = useState(0);
 
@@ -36,6 +38,7 @@ export default function Page() {
   useEffect(() => {
     const getDocument = async () => {
       setLoading(true);
+      await wait(750);
       const tag = activeTagIndex !== 0 ? tags[activeTagIndex] : undefined;
       const data = await getBlogPostPreview({
         tag,
@@ -68,7 +71,7 @@ export default function Page() {
         Unfiltered thoughts and experiences of my day to
         day.「榎田岬太の人生観」
       </p>
-
+      
       <div className={styles.tags}>
         {tagsForRender.map((tag, i) => (
           <TagButton
@@ -91,9 +94,16 @@ export default function Page() {
           <div className={styles.divider} />
           <SetThemeButton />
         </div>
+        {loading && (
+          <div className={styles.posts}>
+            {[1, 2, 3, 4].map((id) => (
+              <PostPreviewSkeleton id={id} key={id} />
+            ))}
+          </div>
+        )}
         <div className={styles.posts}>
           {posts.map((post) => (
-            <PostItem {...post} key={post.id} />
+            <PostPreview {...post} key={post.id} />
           ))}
         </div>
       </div>

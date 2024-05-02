@@ -32,6 +32,10 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
   ),
 });
 
+const Comments = dynamic(() => import("@/components/Comments"), {
+  ssr: false,
+});
+
 export default async function Page({
   params: { id },
 }: {
@@ -60,7 +64,7 @@ export default async function Page({
         <SetThemeButton
           style={{
             border: `1px solid rgba(var(--foreground-rgb))`,
-            fontSize: "inherit",
+            fontSize: "0.8rem",
           }}
         />
       </div>
@@ -82,6 +86,8 @@ export default async function Page({
         ))}
       </div>
       <p className={styles.datePosted}>Date Posted: {formattedDatePosted}</p>
+      <h2>Comments 💬</h2>
+      <Comments id={id} />
     </main>
   );
 }
