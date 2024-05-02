@@ -58,7 +58,7 @@ export default function ImageModal({
         {image ? (
           <>
             <div className={styles.picture}>
-              <Image
+              <img
                 className={styles.image}
                 src={URL.createObjectURL(image)}
                 alt="Image to upload"

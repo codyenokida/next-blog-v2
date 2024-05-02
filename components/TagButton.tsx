@@ -1,4 +1,5 @@
 import classNames from "classnames";
+
 import styles from "./TagButton.module.css";
 
 export default function TagButton({ tag, active, onClick }: TagButtonProps) {

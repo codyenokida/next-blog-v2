@@ -1,17 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.css";
-import dynamic from "next/dynamic";
-import LoadingThemeButton from "@/components/LoadingThemeButton";
-import { tags, tagsForEdit, tagsForRender } from "@/utils/const";
-import TagButton from "@/components/TagButton";
 import { useEffect, useState } from "react";
-import {
-  getBlogPostPreview,
-  getBlogPostPreviewCached,
-} from "@/lib/firebase/firestore";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+import { getBlogPostPreview } from "@/lib/firebase/firestore";
+
+import LoadingThemeButton from "@/components/LoadingThemeButton";
+import TagButton from "@/components/TagButton";
 import PostItem from "@/components/PostItem";
+
+import { tags, tagsForRender } from "@/utils/const";
+
+import styles from "./page.module.css";
 
 const orderBySwap = {
   asc: "desc",

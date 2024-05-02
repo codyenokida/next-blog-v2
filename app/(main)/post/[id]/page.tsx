@@ -1,17 +1,13 @@
-import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import {
-  getBlogPostPreview,
-  getBlogPostPreviewCached,
-  getPostFromId,
-} from "@/lib/firebase/firestore";
+import { getBlogPostPreview, getPostFromId } from "@/lib/firebase/firestore";
 
-import styles from "./page.module.css";
 import LinkButton from "@/components/LinkButton";
 import SpotifyPill from "@/components/SpotifyPill";
 import PostContent from "@/components/PostContent";
-import dynamic from "next/dynamic";
 import LoadingThemeButton from "@/components/LoadingThemeButton";
+
+import styles from "./page.module.css";
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {

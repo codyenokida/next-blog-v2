@@ -9,8 +9,6 @@ import {
 export {};
 
 declare global {
-  ChangeEvent;
-
   interface HTMLInputEvent extends ChangeEvent<HTMLInputElement> {}
   /**
    * Component Prop Types

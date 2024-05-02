@@ -15,6 +15,11 @@
   width: 100%;
 }
 
+.imageDiv {
+  width: 100%;
+  height: auto;
+}
+
 .image {
   width: 100%;
   border: 1px solid rgba(var(--foreground-rgb));

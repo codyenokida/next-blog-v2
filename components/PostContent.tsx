@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./PostContent.module.css";
 
 interface ContentProps {
@@ -15,11 +14,13 @@ export default function PostContent({ content }: ContentProps) {
   } else {
     return (
       <div className={styles.imageContainer} key={content.id}>
-        <Image
-          className={styles.image}
-          src={content.imageURL}
-          alt={content.alt}
-        />
+        <div className={styles.imageDiv}>
+          <img
+            className={styles.image}
+            src={content.imageURL}
+            alt={content.alt}
+          />
+        </div>
         {content.caption && <figcaption>{content.caption}</figcaption>}
       </div>
     );

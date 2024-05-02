@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import styles from "./SetThemeButton.module.css";
 
 const SetThemeButton = ({ style }: any) => {

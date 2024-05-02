@@ -1,12 +1,15 @@
 "use client";
 
-import styles from "./page.module.css";
-import useUserSession from "@/hooks/useUserSession";
-import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
-import { useEffect, useState } from "react";
-import { getUserRole } from "@/lib/firebase/firestore";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
+import { getUserRole } from "@/lib/firebase/firestore";
+
+import useUserSession from "@/hooks/useUserSession";
+
+import styles from "./page.module.css";
 
 export default function Page() {
   const user = useUserSession(null);

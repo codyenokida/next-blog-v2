@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, IBM_Plex_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import classNames from "classnames";
 
-import { GoogleAnalytics } from "@next/third-parties/google";
 import ThemeScript from "@/lib/ThemeScript";
 
 import "./globals.css";

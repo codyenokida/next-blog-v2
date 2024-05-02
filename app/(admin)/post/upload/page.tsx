@@ -22,7 +22,6 @@ import ReorderItem from "@/components/ReorderItem";
 
 import styles from "./page.module.css";
 import { Timestamp } from "firebase/firestore";
-import Image from "next/image";
 
 export default function Page() {
   const router = useRouter();
@@ -417,7 +416,7 @@ export default function Page() {
           {form.thumbnail ? (
             <>
               <div className={styles.thumbnail}>
-                <Image
+                <img
                   className={styles.image}
                   src={URL.createObjectURL(form.thumbnail)}
                   alt="Thumbnail preview"

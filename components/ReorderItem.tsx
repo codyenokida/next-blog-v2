@@ -3,7 +3,6 @@ import { Reorder } from "framer-motion";
 
 import styles from "./ReorderItem.module.css";
 import Markdown from "marked-react";
-import Image from "next/image";
 
 interface ReorderItemProps {
   type: "text" | "image";
@@ -41,7 +40,7 @@ const ReorderItem = ({
     return (
       <Reorder.Item key={value.id} value={value} className={styles.item}>
         <div>
-          <Image
+          <img
             className={styles.img}
             src={
               value.imageUrl
