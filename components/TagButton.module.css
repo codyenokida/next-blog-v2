@@ -3,6 +3,13 @@
   background-color: transparent;
   border: 1px solid rgba(var(--foreground-rgb));
   cursor: pointer;
+  font-size: 0.8rem;
+  color: rgba(var(--foreground-rgb));
+  font-weight: 400;
+}
+
+.button:hover {
+  text-decoration: none;
 }
 
 .active {

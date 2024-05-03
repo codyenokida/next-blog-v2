@@ -1,14 +1,15 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import { getBlogPostPreviewCached } from "@/lib/firebase/firestore";
+import { getBlogPostPreview } from "@/lib/firebase/firestore";
 
 import LoadingThemeButton from "@/components/LoadingThemeButton";
 import TagButton from "@/components/TagButton";
 import PostPreview from "@/components/PostPreview";
 
-import { tagsForRender, tagsForQuery } from "@/utils/const";
+import { tagsForRender, tagsForEdit, tagsForQuery } from "@/utils/const";
 
 import styles from "./page.module.css";
 
@@ -24,12 +25,29 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
 
 export const dynamicParams = false;
 
-export default async function Page({ searchParams: { order = "desc" } }: any) {
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  return tagsForEdit.map((tag) => ({
+    slug: tag,
+  }));
+}
+
+export default async function Page({
+  params: { tag },
+  searchParams: { order = "desc" },
+}: any) {
   const posts =
-    (await getBlogPostPreviewCached({
-      tag: undefined,
+    (await getBlogPostPreview({
+      tag: tagsForEdit[tagsForQuery.findIndex((t) => t === tag)],
       order: order === "desc" ? "desc" : "asc",
     })) || [];
+
+  const getActiveTag = (index: number) => {
+    if (index !== 0) {
+      return tag === tagsForQuery[index - 1];
+    }
+    return !tag;
+  };
 
   const getTagHref = (index: number) => {
     if (index === 0) {
@@ -62,7 +80,7 @@ export default async function Page({ searchParams: { order = "desc" } }: any) {
           <TagButton
             tag={tag}
             key={tag}
-            active={i === 0}
+            active={getActiveTag(i)}
             href={getTagHref(i)}
           />
         ))}
@@ -71,7 +89,9 @@ export default async function Page({ searchParams: { order = "desc" } }: any) {
       <div className={styles.content}>
         <div className={styles.utilities}>
           <Link
-            href={`/?order=${orderBySwap[order === "desc" ? "desc" : "asc"]}`}
+            href={`/${tag}?order=${
+              orderBySwap[order === "desc" ? "desc" : "asc"]
+            }`}
             className={styles.sort}
           >
             Sort By Date {order === "asc" ? "⬆️" : "⬇️"}
