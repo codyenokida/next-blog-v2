@@ -1,16 +1,20 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 
-import { getBlogPostPreviewCached } from "@/lib/firebase/firestore";
+import { getBlogPostPreview, migrateComments } from "@/lib/firebase/firestore";
 
 import LoadingThemeButton from "@/components/LoadingThemeButton";
 import TagButton from "@/components/TagButton";
 import PostPreview from "@/components/PostPreview";
+import PostPreviewSkeleton from "@/components/PostPreviewSkeleton";
 
-import { tagsForRender, tagsForQuery } from "@/utils/const";
+import { tags, tagsForRender } from "@/utils/const";
 
 import styles from "./page.module.css";
+import { wait } from "@/utils/helper";
 
 const orderBySwap = {
   asc: "desc",
@@ -22,21 +26,32 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
   loading: () => <LoadingThemeButton />,
 });
 
-export const dynamicParams = false;
+export default function Page() {
+  const [posts, setPosts] = useState<BlogPostPreview[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [orderBy, setOrderBy] = useState<"asc" | "desc">("desc");
+  const [activeTagIndex, setActiveTagIndex] = useState(0);
 
-export default async function Page({ searchParams: { order = "desc" } }: any) {
-  const posts =
-    (await getBlogPostPreviewCached({
-      tag: undefined,
-      order: order === "desc" ? "desc" : "asc",
-    })) || [];
+  /**
+   * Side Effect to fetch posts
+   */
+  useEffect(() => {
+    const getDocument = async () => {
+      setLoading(true);
+      await wait(750);
+      const tag = activeTagIndex !== 0 ? tags[activeTagIndex] : undefined;
+      const data = await getBlogPostPreview({
+        tag,
+        order: orderBy,
+      });
+      if (data) {
+        setPosts(data);
+      }
+      setLoading(false);
+    };
 
-  const getTagHref = (index: number) => {
-    if (index === 0) {
-      return "/";
-    }
-    return `/${tagsForQuery[index - 1]}`;
-  };
+    getDocument();
+  }, [activeTagIndex, orderBy]);
 
   return (
     <main className={styles.main}>
@@ -56,29 +71,36 @@ export default async function Page({ searchParams: { order = "desc" } }: any) {
         Unfiltered thoughts and experiences of my day to
         day.「榎田岬太の人生観」
       </p>
-
+      
       <div className={styles.tags}>
         {tagsForRender.map((tag, i) => (
           <TagButton
             tag={tag}
             key={tag}
-            active={i === 0}
-            href={getTagHref(i)}
+            active={activeTagIndex === i}
+            onClick={() => setActiveTagIndex(i)}
           />
         ))}
       </div>
 
       <div className={styles.content}>
         <div className={styles.utilities}>
-          <Link
-            href={`/?order=${orderBySwap[order === "desc" ? "desc" : "asc"]}`}
+          <button
             className={styles.sort}
+            onClick={() => setOrderBy(orderBySwap[orderBy] as "asc" | "desc")}
           >
-            Sort By Date {order === "asc" ? "⬆️" : "⬇️"}
-          </Link>
+            Sort By Date {orderBy === "asc" ? "⬆️" : "⬇️"}
+          </button>
           <div className={styles.divider} />
           <SetThemeButton />
         </div>
+        {loading && (
+          <div className={styles.posts}>
+            {[1, 2, 3, 4].map((id) => (
+              <PostPreviewSkeleton id={id} key={id} />
+            ))}
+          </div>
+        )}
         <div className={styles.posts}>
           {posts.map((post) => (
             <PostPreview {...post} key={post.id} />

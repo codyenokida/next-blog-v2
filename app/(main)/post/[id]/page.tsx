@@ -56,7 +56,7 @@ export default async function Page({
     ? datePosted?.toDate()?.toLocaleDateString()
     : "";
 
-  if (!post.title) notFound();
+  if (!post?.title) notFound();
 
   return (
     <main className={styles.main}>

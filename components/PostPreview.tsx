@@ -18,8 +18,9 @@ export default function PostPreview({
         <Image
           src={thumbnailURL}
           alt={`${title} thumbnail`}
-          width={200}
-          height={200}
+          width={540}
+          height={540}
+          priority
         />
       </div>
       <div className={styles.text}>

@@ -10,6 +10,3 @@ export const tagsForRender = [
 ];
 
 export const tagsForEdit = ["Life", "Thoughts", "Bicycle", "Reviews", "Misc."];
-
-export const tagsForQuery = ["life", "thoughts", "bicycle", "reviews", "misc."];
-
