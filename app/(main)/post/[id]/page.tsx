@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 
 import { getBlogPostPreview, getPostFromId } from "@/lib/firebase/firestore";
 
@@ -55,7 +56,7 @@ export default async function Page({
     ? datePosted?.toDate()?.toLocaleDateString()
     : "";
 
-  if (!post) return null;
+  if (!post?.title) notFound();
 
   return (
     <main className={styles.main}>

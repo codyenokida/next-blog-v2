@@ -18,8 +18,8 @@ export default function Footer() {
           </a>
         </p>
         <p>
-          Want to get notified on each post?{" "}
-          <Link href="/email-list">Sign up here! 📧</Link>
+          Want to get an email when I post?{" "}
+          <Link href="/subscribe">Subscribe! 📧</Link>
         </p>
       </div>
     </footer>

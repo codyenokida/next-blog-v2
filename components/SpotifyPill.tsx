@@ -28,6 +28,14 @@ export default function SpotifyPill({ spotifyEmbedLink }: SpotifyPillProps) {
     }, 750);
   }, [spotifyEmbedLoading]);
 
+  if (!spotifyEmbedLink) {
+    return (
+      <div className={styles.div}>
+        <div className={styles.spotify} ref={spotifyEmbedRef}></div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.div}>
       {spotifyEmbedLoading && <div className={styles.skeleton} />}

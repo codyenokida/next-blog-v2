@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { getUserRole } from "@/lib/firebase/firestore";
 
 import useUserSession from "@/hooks/useUserSession";
@@ -15,6 +16,11 @@ export default function Page() {
   const router = useRouter();
 
   const [admin, setAdmin] = useState(false);
+
+  const handleSignOut = (event: any) => {
+    event.preventDefault();
+    signOut();
+  };
 
   useEffect(() => {
     const getDocument = async () => {
@@ -30,11 +36,18 @@ export default function Page() {
     getDocument();
   }, [user, router]);
 
+  if (!user && !admin) {
+    return null;
+  }
+
   if (admin) {
     return (
       <main className={styles.main}>
         <h1>Sup</h1>
         <Link href="/post/upload">Create post</Link>
+        <a className={styles.login} href="#" onClick={handleSignOut}>
+          Sign Out
+        </a>
       </main>
     );
   }
