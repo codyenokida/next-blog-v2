@@ -1,3 +1,7 @@
+"use client";
+
+import Markdown from "marked-react";
+
 import styles from "./PostContent.module.css";
 
 interface ContentProps {
@@ -8,7 +12,7 @@ export default function PostContent({ content }: ContentProps) {
   if (content.type === "text") {
     return (
       <div className={styles.text} key={content.id}>
-        {content.text}
+        <Markdown>{content.text}</Markdown>
       </div>
     );
   } else {
