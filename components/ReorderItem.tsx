@@ -43,8 +43,8 @@ const ReorderItem = ({
           <img
             className={styles.img}
             src={
-              value.imageUrl
-                ? value.imageUrl
+              value.imageURL
+                ? value.imageURL
                 : URL.createObjectURL(value.tempImageFile)
             }
             alt="item temporary"

@@ -20,6 +20,7 @@ export default function Page() {
   const handleSignOut = (event: any) => {
     event.preventDefault();
     signOut();
+    router.push("/login");
   };
 
   useEffect(() => {

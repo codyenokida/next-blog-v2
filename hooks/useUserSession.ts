@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { onAuthStateChanged } from "@/lib/firebase/auth";
 
-export default function useUserSession(initialUser: any) {
+export default function useUserSession(initialUser?: any) {
   // The initialUser comes from the server through a server component
   const [user, setUser] = useState(initialUser);
   const router = useRouter();

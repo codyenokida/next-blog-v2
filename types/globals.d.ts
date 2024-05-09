@@ -98,13 +98,42 @@ declare global {
     preview: string;
   }
 
-  // Post Upload Types
+  /**
+   * Post Edit Types
+   */
+
+  type FormEditContent = TempImageEditContent | TextContent;
+
+  interface FormEdit {
+    id: string;
+    title: string;
+    thumbnail: Blob;
+    tag: string;
+    spotify: string;
+    startDate: string;
+    endDate?: string;
+    content: FormEditContent[];
+    preview: string;
+  }
+
+  /**
+   * Post Edit Types
+   */
   interface TempImageContent {
     type: "image";
     id: string;
     tempImageFile: Blob;
     alt: string;
-    caption: string;
+    caption?: string;
+  }
+
+  interface TempImageEditContent {
+    type: "image";
+    id: string;
+    imageURL?: string;
+    tempImageFile?: Blob;
+    alt: string;
+    caption?: string;
   }
 
   type FormContent = TempImageContent | TextContent;

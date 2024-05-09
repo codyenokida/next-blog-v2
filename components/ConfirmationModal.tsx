@@ -9,6 +9,7 @@ export default function ConfirmationModal({
   handleClose,
   uploadPost,
   preview,
+  previewRef,
   updateFormValue,
 }: any) {
   return (
@@ -19,6 +20,7 @@ export default function ConfirmationModal({
         <textarea
           className={styles.textarea}
           value={preview}
+          ref={previewRef}
           onChange={(e) => updateFormValue(e, "preview")}
         />
         <div className={styles.buttons}>

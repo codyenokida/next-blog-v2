@@ -6,21 +6,11 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const user = useUserSession(null);
+  const user = useUserSession();
   const router = useRouter();
 
   useEffect(() => {
-    const getDocument = async () => {
-      if (!user && router) {
-        router.push("/login");
-      }
-      if (user && router) {
-        const role = await getUserRole(user.email);
-        if (role === "Admin") {
-          router.push("/dashboard");
-        }
-      }
-    };
+    const getDocument = async () => {};
 
     getDocument();
   }, [user, router]);
