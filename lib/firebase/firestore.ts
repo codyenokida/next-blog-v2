@@ -151,6 +151,7 @@ export async function postComment(id: string, author: string, content: string) {
   }
   const postRef = doc(db, "comments", id);
   const datePosted = new Date();
+
   // Atomically add a new comment to the "comments" array field.
   await updateDoc(postRef, {
     comments: arrayUnion({
@@ -166,6 +167,8 @@ export async function uploadPost(id: string, post: BlogPostData) {
   // const blogPostItemRef = doc(db, "posts", `${id}`);
   const blogPostItemRef = doc(db, "post-previews", `${id}`);
   const blogPostContentRef = doc(db, "post", `${id}`);
+  const blogCommentRef = doc(db, "comments", id);
+
   const item: BlogPostPreview = {
     id: post.id,
     datePosted: post.datePosted as Timestamp, // Date gets converted in Timestamp in Firestore
@@ -176,6 +179,7 @@ export async function uploadPost(id: string, post: BlogPostData) {
   };
   setDoc(blogPostItemRef, { ...item }, { merge: true });
   setDoc(blogPostContentRef, { ...post }, { merge: true });
+  setDoc(blogCommentRef, { comments: [], id: post.id }, { merge: true });
 }
 
 export async function deletePost(id: string) {
