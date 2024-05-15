@@ -29,7 +29,7 @@ declare global {
   interface TagButtonProps {
     tag: string;
     active?: boolean;
-    onClick: MouseEventHandler<HTMLButtonElement>;
+    href: string;
   }
 
   interface ImageModalProps {

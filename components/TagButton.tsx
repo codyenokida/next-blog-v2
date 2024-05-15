@@ -1,14 +1,15 @@
 import classNames from "classnames";
+import Link from "next/link";
 
 import styles from "./TagButton.module.css";
 
-export default function TagButton({ tag, active, onClick }: TagButtonProps) {
+export default function TagButton({ tag, active, href }: TagButtonProps) {
   return (
-    <button
+    <Link
       className={classNames(styles.button, { [styles.active]: active })}
-      onClick={onClick}
+      href={href}
     >
       {tag}
-    </button>
+    </Link>
   );
 }
