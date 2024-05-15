@@ -10,3 +10,5 @@ export const tagsForRender = [
 ];
 
 export const tagsForEdit = ["Life", "Thoughts", "Bicycle", "Reviews", "Misc."];
+
+export const tagsForPath = ["life", "thoughts", "bicycle", "reviews", "misc"];

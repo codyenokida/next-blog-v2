@@ -10,14 +10,17 @@ import LoadingThemeButton from "@/components/LoadingThemeButton";
 
 import styles from "./page.module.css";
 
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const posts = await getBlogPostPreview();
-
-  if (!posts) return [];
-
+  const posts = (await getBlogPostPreview()) || [];
   return posts.map((post) => ({
-    slug: post.id,
+    id: post.id,
   }));
 }
 
@@ -37,12 +40,9 @@ const Comments = dynamic(() => import("@/components/Comments"), {
   ssr: false,
 });
 
-export default async function Page({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params: { id } }: PageProps) {
   const post = (await getPostFromId(id)) || ({} as BlogPostData);
+
   const { title, dateType, spotify, startDate, endDate, content, datePosted } =
     post;
 

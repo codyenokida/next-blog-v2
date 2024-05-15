@@ -4,10 +4,6 @@
   min-height: 100vh;
 }
 
-.content {
-  margin-top: 1.25rem;
-}
-
 .posts {
   margin: 1.25rem 0;
   display: grid;
@@ -19,25 +15,6 @@
 @media (max-width: 700px) {
   .main {
     padding: 0 1.75rem;
-  }
-
-  .titleContainer {
-    gap: 0.75rem;
-  }
-
-  .logo {
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .title {
-    font-size: 1.7rem;
-    line-height: 2.25rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-    line-height: 1.5rem;
   }
 
   .posts {
@@ -61,14 +38,4 @@
     flex-direction: column;
     gap: 1rem;
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  /* .vercelLogo {
-    filter: invert(1);
-  }
-
-  .logo {
-    filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
-  } */
 }

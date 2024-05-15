@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
-import styles from "./Comments.module.css";
+import Button from "@/components/Button";
+
 import { getCommentsFromId, postComment } from "@/lib/firebase/firestore";
 import { Timestamp } from "firebase/firestore";
-import { formatDate } from "@/utils/helper";
-import Button from "./Button";
+
+import styles from "./Comments.module.css";
 
 interface CommentsProps {
   id: string;

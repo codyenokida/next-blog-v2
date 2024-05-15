@@ -1,6 +1,9 @@
 .button {
   padding: 0.4rem 0.75rem;
+  color: rgba(var(--foreground-rgb));
   background-color: transparent;
+  font-size: 0.9rem;
+  font-weight: 400;
   border: 1px solid rgba(var(--foreground-rgb));
   cursor: pointer;
 }
