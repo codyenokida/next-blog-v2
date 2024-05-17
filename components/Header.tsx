@@ -10,7 +10,7 @@ import { tagsForPath, tagsForRender } from "@/utils/const";
 import styles from "./Header.module.css";
 
 type HeaderProps = {
-  tag: string;
+  tag?: string;
 };
 
 const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
@@ -18,7 +18,7 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
   loading: () => <LoadingThemeButton />,
 });
 
-export default function Header({ tag }: HeaderProps) {
+export default function Header({ tag = "" }: HeaderProps) {
   return (
     <div>
       <div className={styles.titleContainer}>

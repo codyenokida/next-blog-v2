@@ -1,55 +1,67 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
-import { getUserRole } from "@/lib/firebase/firestore";
-
-import useUserSession from "@/hooks/useUserSession";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { getBlogPostPreview } from "@/lib/firebase/firestore";
 
 import styles from "./page.module.css";
+import dynamic from "next/dynamic";
+import LoadingThemeButton from "@/components/LoadingThemeButton";
+import LinkButton from "@/components/LinkButton";
 
-export default function Page() {
-  const user = useUserSession(null);
-  const router = useRouter();
+const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
+  ssr: false,
+  loading: () => (
+    <LoadingThemeButton
+      style={{
+        border: `1px solid rgba(var(--foreground-rgb))`,
+        fontSize: "0.8rem",
+      }}
+    />
+  ),
+});
 
-  const [admin, setAdmin] = useState(false);
+export default async function Page() {
+  const session = await getServerSession(options);
 
-  const handleSignOut = (event: any) => {
-    event.preventDefault();
-    signOut();
-    router.push("/login");
-  };
-
-  useEffect(() => {
-    const getDocument = async () => {
-      if (user) {
-        const role = await getUserRole(user.email);
-        if (role !== "Admin") {
-          router.push("/");
-        }
-        setAdmin(true);
-      }
-    };
-
-    getDocument();
-  }, [user, router]);
-
-  if (!user && !admin) {
-    return null;
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/dashboard");
   }
 
-  if (admin) {
-    return (
-      <main className={styles.main}>
-        <h1>Sup</h1>
-        <Link href="/post/upload">Create post</Link>
-        <a className={styles.login} href="#" onClick={handleSignOut}>
-          Sign Out
+  const posts = (await getBlogPostPreview()) as BlogPostPreview[];
+
+  return (
+    <main className={styles.main}>
+      <div className={styles.header}>
+        <h1>Manage My Blog</h1>
+        <SetThemeButton
+          style={{
+            border: `1px solid rgba(var(--foreground-rgb))`,
+            fontSize: "0.8rem",
+          }}
+        />
+      </div>
+      <div className={styles.links}>
+        <Link href="/">🏠 Back to Home</Link>
+        <Link href="/post/upload">🎞️ Upload Post</Link>
+        <a
+          target="_blank"
+          href={`https://vercel.com/${process.env.VERCEL_TEAM_NAME}/${process.env.VERCEL_PROJECT_NAME}/deployments`}
+          rel="noopener noreferrer"
+        >
+          🔼 Redeploy Cache on Vercel
         </a>
-      </main>
-    );
-  }
+        <span>🚧 Edit Post</span>
+        <ul className={styles.list}>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Link href={`/post/${post.id}/edit`}>{post.title}</Link>
+            </li>
+          ))}
+        </ul>
+        <LinkButton text="🛌 Sign Out" href="/api/auth/signout" />
+      </div>
+    </main>
+  );
 }

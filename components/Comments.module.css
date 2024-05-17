@@ -12,7 +12,6 @@
 
 .input {
   width: 100%;
-  border: 1px solid rgba(var(--foreground-rgb));
 }
 
 .textarea {

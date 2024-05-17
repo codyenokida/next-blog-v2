@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 const jetBrains = JetBrains_Mono({
-  weight: "700",
+  weight: ["500", "700"],
   subsets: ["latin"],
   variable: "--font-jetBrains",
 });
@@ -36,7 +36,6 @@ export default function RootLayout({
       />
       <body className={classNames(ibm.className, jetBrains.variable)}>
         {children}
-        <Footer />
       </body>
     </html>
   );

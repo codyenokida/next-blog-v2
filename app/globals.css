@@ -23,6 +23,9 @@
   --color-error: 239 87 87;
 
   --color-reorder: #ac14c2;
+
+  --color-input-bg: 255, 255, 255;
+  --color-input-border: 0, 0, 0;
 }
 
 :root[data-theme="dark"] {
@@ -36,6 +39,9 @@
   --card-border-rgb: 200, 200, 200;
 
   --color-link: 15, 130, 175;
+
+  --color-input-bg: 26, 26, 26;
+  --color-input-border: 111 111 111;
 }
 
 * {
@@ -94,4 +100,10 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+input,
+textarea {
+  background-color: rgba(var(--color-input-bg));
+  border: 1px solid rgba(var(--color-input-border));
 }

@@ -1,17 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getPlaiceholder } from "plaiceholder";
 
 import { formatDate } from "@/utils/helper";
 
 import styles from "./PostPreview.module.css";
 
-export default function PostPreview({
+export default async function PostPreview({
   id,
   datePosted,
   thumbnailURL,
   title,
   preview,
 }: PostPreviewProps) {
+  const response = await fetch(thumbnailURL);
+  const arrayBuffer = await response.arrayBuffer();
+
+  const { base64 } = await getPlaiceholder(Buffer.from(arrayBuffer));
+
   return (
     <Link className={styles.item} key={id} href={`/post/${id}`}>
       <div className={styles.image}>
@@ -20,7 +26,7 @@ export default function PostPreview({
           alt={`${title} thumbnail`}
           width={540}
           height={540}
-          priority
+          blurDataURL={base64}
         />
       </div>
       <div className={styles.text}>

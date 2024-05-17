@@ -3,15 +3,15 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { Reorder } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Timestamp } from "firebase/firestore";
 
 import { tagsForEdit } from "@/utils/const";
 import { compressImage, isValidSpotifyTrackURL } from "@/utils/helper";
 
 import { uploadImageToStorage } from "@/lib/firebase/storage";
 import { uploadPost } from "@/lib/firebase/firestore";
-
-import useUserSession from "@/hooks/useUserSession";
 
 import ImageModal from "@/components/ImageModal";
 import TextModal from "@/components/TextModal";
@@ -21,9 +21,14 @@ import Button from "@/components/Button";
 import ReorderItem from "@/components/ReorderItem";
 
 import styles from "./page.module.css";
-import { Timestamp } from "firebase/firestore";
 
 export default function Page() {
+  const { data: _session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect(`/api/auth/signin?callbackUrl=/post/upload`);
+    },
+  });
   const router = useRouter();
 
   // Controlled Form State

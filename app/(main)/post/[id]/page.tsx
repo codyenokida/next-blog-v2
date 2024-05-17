@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getBlogPostPreview, getPostFromId } from "@/lib/firebase/firestore";
 
+import Footer from "@/components/Footer";
 import LinkButton from "@/components/LinkButton";
 import SpotifyPill from "@/components/SpotifyPill";
 import PostContent from "@/components/PostContent";
@@ -89,6 +90,7 @@ export default async function Page({ params: { id } }: PageProps) {
       <p className={styles.datePosted}>Date Posted: {formattedDatePosted}</p>
       <h2>Comments 💬</h2>
       <Comments id={id} />
+      <Footer />
     </main>
   );
 }

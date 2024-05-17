@@ -2,3 +2,29 @@
   padding: 2rem;
   height: 100vh;
 }
+
+.main a,
+.main span {
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  margin-left: 2rem;
+}
+
+.list li {
+  margin-top: 0.5rem;
+}

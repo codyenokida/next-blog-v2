@@ -1,5 +1,6 @@
-import PostPreview from "@/components/PostPreview";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PostPreview from "@/components/PostPreview";
 
 import { getBlogPostPreview } from "@/lib/firebase/firestore";
 
@@ -10,7 +11,7 @@ export default async function Page() {
 
   return (
     <main className={styles.main}>
-      <Header tag="" />
+      <Header />
       <div className={styles.content}>
         <div className={styles.posts}>
           {posts.map((post) => (
@@ -18,6 +19,7 @@ export default async function Page() {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

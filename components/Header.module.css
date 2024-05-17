@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-weight: 700;
+  font-weight: 500;
   line-height: 2.5rem;
 }
 
@@ -40,7 +40,7 @@
   border: none;
   cursor: pointer;
   color: rgba(var(--foreground-rgb));
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 400;
 }
 

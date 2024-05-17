@@ -3,7 +3,9 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { Reorder } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Timestamp } from "firebase/firestore";
 
 import { tagsForEdit } from "@/utils/const";
 import {
@@ -23,9 +25,15 @@ import Button from "@/components/Button";
 import ReorderItem from "@/components/ReorderItem";
 
 import styles from "./page.module.css";
-import { Timestamp } from "firebase/firestore";
 
 export default function Page({ params: { id } }: any) {
+  const { data: _session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect(`/api/auth/signin?callbackUrl=/post/${id}/edit`);
+    },
+  });
+
   const router = useRouter();
 
   // Controlled Form State
@@ -102,7 +110,7 @@ export default function Page({ params: { id } }: any) {
     };
 
     getData();
-  }, [id]);
+  }, [id, dateType]);
 
   useEffect(() => {
     setForm((prev) => ({ ...prev, content: content }));
