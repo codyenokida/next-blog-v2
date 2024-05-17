@@ -60,6 +60,7 @@ export default async function Page() {
             </li>
           ))}
         </ul>
+        <br />
         <LinkButton text="🛌 Sign Out" href="/api/auth/signout" />
       </div>
     </main>

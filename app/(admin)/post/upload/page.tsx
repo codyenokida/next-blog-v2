@@ -40,12 +40,16 @@ export default function Page() {
 
   // Error State
   const [formError, setFormError] = useState<FormError>({} as FormError);
+  const [failure, setFailure] = useState<string>("");
 
   // Modal State
   const [openImageModal, setOpenImageModal] = useState<boolean>(false);
   const [openTextModal, setOpenTextModal] = useState<boolean>(false);
   const [openPostConfirmationModal, setOpenPostConfirmationModal] =
     useState<boolean>(false);
+
+  // Loading States
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Refs
   const hiddenFileInput = useRef<any>(null);
@@ -208,66 +212,65 @@ export default function Page() {
      * Uploading all assets
      */
 
-    // If thumbnail alreday exists use, if not upload to storage
-    const thumbnailUrl = await uploadImageToStorage(
-      form.id,
-      "thumbnail",
-      form.thumbnail
-    );
-
-    // Upload all content images
-    const contentToUpload: Content[] = await Promise.all(
-      form.content.map(async (section: FormContent) => {
-        if (section.type === "text") {
-          return section;
-        } else if (section.type === "image") {
-          const { id, tempImageFile, type, caption, alt } = section;
-          const storageImageUrl =
-            (await uploadImageToStorage(form.id, id, tempImageFile)) || "";
-          const imageContent: ImageContent = {
-            id: id,
-            type: type,
-            imageURL: storageImageUrl,
-            caption: caption,
-            alt: alt,
-          };
-          return imageContent;
-        }
-        return {} as Content;
-      })
-    );
-
-    // Generate Metadata
-    const postToUpload: BlogPostData = {
-      id: form.id,
-      title: form.title,
-      content: contentToUpload,
-      datePosted: Timestamp.fromDate(new Date()),
-      dateType,
-      startDate: Timestamp.fromDate(
-        form.startDate ? new Date(form.startDate) : new Date()
-      ),
-      endDate: Timestamp.fromDate(
-        form.endDate ? new Date(form.endDate) : new Date()
-      ),
-      tag: form.tag,
-      spotify: form.spotify,
-      thumbnailURL: thumbnailUrl,
-      preview: form.preview,
-    };
-
-    await uploadPost(form.id, postToUpload);
-
     try {
-      // Only send email when posting
-      // if (!edit) {
-      //   await sendEmailPost(postId);
-      // }
-    } catch (e) {
-      console.error(e);
-    }
+      setLoading(true);
+      setFailure("");
+      // If thumbnail alreday exists use, if not upload to storage
+      const thumbnailUrl = await uploadImageToStorage(
+        form.id,
+        "thumbnail",
+        form.thumbnail
+      );
 
-    router.push(`/post/${form.id}`);
+      // Upload all content images
+      const contentToUpload: Content[] = await Promise.all(
+        form.content.map(async (section: FormContent) => {
+          if (section.type === "text") {
+            return section;
+          } else if (section.type === "image") {
+            const { id, tempImageFile, type, caption, alt } = section;
+            const storageImageUrl =
+              (await uploadImageToStorage(form.id, id, tempImageFile)) || "";
+            const imageContent: ImageContent = {
+              id: id,
+              type: type,
+              imageURL: storageImageUrl,
+              caption: caption,
+              alt: alt,
+            };
+            return imageContent;
+          }
+          return {} as Content;
+        })
+      );
+
+      // Generate Metadata
+      const postToUpload: BlogPostData = {
+        id: form.id,
+        title: form.title,
+        content: contentToUpload,
+        datePosted: Timestamp.fromDate(new Date()),
+        dateType,
+        startDate: Timestamp.fromDate(
+          form.startDate ? new Date(form.startDate) : new Date()
+        ),
+        endDate: Timestamp.fromDate(
+          form.endDate ? new Date(form.endDate) : new Date()
+        ),
+        tag: form.tag,
+        spotify: form.spotify,
+        thumbnailURL: thumbnailUrl,
+        preview: form.preview,
+      };
+
+      await uploadPost(form.id, postToUpload);
+      setLoading(false);
+      router.push(`/dashboard`);
+    } catch (e: any) {
+      console.error(e);
+      setLoading(false);
+      setFailure(e.message);
+    }
   };
 
   /**
@@ -496,9 +499,9 @@ export default function Page() {
           </div>
         </div>
         <div className={styles.buttons}>
-          {/* <Button text="Clear All" onClick={handleClear} /> */}
-          <Button text="Post" />
+          <Button text="Post" loading={loading} />
         </div>
+        {!!failure && <span className={styles.error}>{failure}</span>}
       </form>
       <ImageModal
         open={openImageModal}
