@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PostPreviewSkeleton from "@/components/PostPreviewSkeleton";
 import PostPreview from "@/components/PostPreview";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 import { getBlogPostPreview } from "@/lib/firebase/firestore";
 
@@ -52,6 +53,7 @@ export default async function Page({ params: { tag } }: PageProps) {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   );
 }
