@@ -18,11 +18,19 @@
   font-size: inherit;
   width: 20rem;
   height: 20rem;
-  padding: 0.25rem
+  padding: 0.25rem;
 }
 
 .buttons {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .textarea {
+    width: 18rem;
+    height: 20rem;
+  }
 }
