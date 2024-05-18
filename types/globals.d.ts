@@ -176,4 +176,10 @@ declare global {
   interface FirestoreBlogPostCommentsQuery {
     id: string;
   }
+
+  // Email List
+  interface EmailUser {
+    name: string;
+    email: string;
+  }
 }

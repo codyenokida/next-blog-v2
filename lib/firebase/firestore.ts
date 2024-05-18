@@ -2,7 +2,7 @@
  * Helper Firestore APIs
  */
 import { cache } from "react";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import {
   getDocs,
   collection,
@@ -191,7 +191,9 @@ export async function deletePost(id: string) {
 export async function getEmailList() {
   const collectionRef = collection(db, "email-list");
   const collectionSnap = await getDocs(collectionRef);
-  const emailList = collectionSnap?.docs?.map((doc) => doc.data());
+  const emailList = collectionSnap?.docs?.map((doc) =>
+    doc.data()
+  ) as EmailUser[];
   return emailList;
 }
 
@@ -206,49 +208,64 @@ export async function addToEmaiList(name: string, email: string) {
   setDoc(emailListDocRef, { ...collectionObj }, { merge: true });
 }
 
-// export async function sendEmailPost(blogId: string) {
-//   const collectionRef = collection(db, "email-list");
-//   const collectionSnap = await getDocs(collectionRef);
-//   const list = collectionSnap?.docs?.map((doc) => doc.data());
-//   if (!list.length) return false;
-//   for (const user of list) {
-//     const { email, name } = user;
-//     const templateParams = {
-//       blog_link: blogId,
-//       recipient: email,
-//       to_name: name,
-//     };
-//     wait(1200);
-//     try {
-//       await emailjs.send(
-//         process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
-//         "blog-template",
-//         templateParams,
-//         process.env.NEXT_PUBLIC_EMAIL_API_KEY
-//       );
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-//   return true;
-// }
+export async function sendNotificationToEmailList(slug: string) {
+  // Error check the slug
+  const post = await getPostFromId(slug);
+  if (!post) {
+    throw { message: "Post does not exist" };
+  }
 
-// export async function sendEmailSubscribed(name: string, email: string) {
-//   const templateParams = {
-//     recipient: email,
-//     to_name: name,
-//   };
-//   try {
-//     await emailjs.send(
-//       process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
-//       "blog-sub",
-//       templateParams,
-//       process.env.NEXT_PUBLIC_EMAIL_API_KEY
-//     );
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+  const collectionRef = collection(db, "email-list");
+  const collectionSnap = await getDocs(collectionRef);
+  const list = collectionSnap?.docs?.map((doc) => doc.data());
+  if (!list.length) return false;
+  for (const user of list) {
+    const { email, name } = user;
+    const templateParams = {
+      slug: slug,
+      recipient: email,
+      to_name: name,
+    };
+    wait(2200);
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
+        "blog-template",
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAIL_API_KEY
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  return true;
+}
+
+export async function sendEmailSubscribed(name: string, email: string) {
+  const templateParams = {
+    recipient: email,
+    to_name: name,
+  };
+  try {
+    await emailjs.send(
+      process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
+      "blog-sub",
+      templateParams,
+      process.env.NEXT_PUBLIC_EMAIL_API_KEY
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function unsubscribeFromEmailList(email: string) {
+  try {
+    const emailListDocRef = doc(db, "email-list", email);
+    deleteDoc(emailListDocRef);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // Helpers for migration
 

@@ -1,0 +1,35 @@
+.main {
+  padding: 2rem;
+  min-height: 100vh;
+  max-width: 750px;
+}
+
+.main a,
+.main span {
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 1.25rem;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  margin-left: 2rem;
+}
+
+.list li {
+  margin-top: 0.5rem;
+}

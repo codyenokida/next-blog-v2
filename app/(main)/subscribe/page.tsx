@@ -5,15 +5,15 @@ import Link from "next/link";
 
 import { validateEmail } from "@/utils/helper";
 
+import Button from "@/components/Button";
+
 import {
   addToEmaiList,
   getEmailList,
-  //   sendEmailSubscribed,
+  sendEmailSubscribed,
 } from "@/lib/firebase/firestore";
 
 import styles from "./page.module.css";
-import Button from "@/components/Button";
-import { error } from "console";
 
 const Page = () => {
   // Email List
@@ -80,7 +80,7 @@ const Page = () => {
     await addToEmaiList(name, email);
 
     // Send confirmation email
-    // await sendEmailSubscribed(name, email);
+    await sendEmailSubscribed(name, email);
 
     setCompleted(true);
     setLoading(false);

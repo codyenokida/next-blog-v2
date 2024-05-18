@@ -52,6 +52,7 @@ export default async function Page() {
         >
           🔼 Redeploy Cache on Vercel
         </a>
+        <Link href="/email">📧 Send Email</Link>
         <span>🚧 Edit Post</span>
         <ul className={styles.list}>
           {posts.map((post) => (
