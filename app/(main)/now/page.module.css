@@ -1,0 +1,24 @@
+.main {
+  margin: 2rem auto;
+  max-width: 750px;
+  min-height: 100vh;
+}
+
+.date {
+  color: rgba(var(--color-gray));
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .main {
+    padding: 0 1.75rem;
+  }
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .main {
+    padding: 0 2rem;
+    min-height: 100vh;
+  }
+}

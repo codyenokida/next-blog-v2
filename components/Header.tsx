@@ -5,7 +5,7 @@ import Link from "next/link";
 import TagButton from "@/components/TagButton";
 import LoadingThemeButton from "@/components/LoadingThemeButton";
 
-import { tagsForPath, tagsForRender } from "@/utils/const";
+import { currentLocation, tagsForPath, tagsForRender } from "@/utils/const";
 
 import styles from "./Header.module.css";
 
@@ -47,8 +47,8 @@ export default function Header({ tag = "" }: HeaderProps) {
         ))}
       </div>
       <div className={styles.utilities}>
-        <Link className={styles.subscribe} href="/subscribe">
-          Consider <strong>Subscribing!</strong> 🙌 📩
+        <Link className={styles.now} href="/now">
+          What I&apos;m doing <strong>now</strong> 🗺️📍
         </Link>
         <div className={styles.divider} />
         <SetThemeButton />
