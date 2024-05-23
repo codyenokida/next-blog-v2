@@ -14,8 +14,8 @@ export default async function Page() {
       <Header />
       <div className={styles.content}>
         <div className={styles.posts}>
-          {posts.map((post) => (
-            <PostPreview {...post} key={post.id} />
+          {posts.map((post, i) => (
+            <PostPreview {...post} key={post.id} index={i} />
           ))}
         </div>
       </div>

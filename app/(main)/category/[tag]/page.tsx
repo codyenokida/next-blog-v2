@@ -40,16 +40,9 @@ export default async function Page({ params: { tag } }: PageProps) {
     <main className={styles.main}>
       <Header tag={tag} />
       <div className={styles.content}>
-        {false && (
-          <div className={styles.posts}>
-            {[1, 2, 3, 4].map((id) => (
-              <PostPreviewSkeleton id={id} key={id} />
-            ))}
-          </div>
-        )}
         <div className={styles.posts}>
-          {posts.map((post) => (
-            <PostPreview {...post} key={post.id} />
+          {posts.map((post, i) => (
+            <PostPreview {...post} key={post.id} index={i} />
           ))}
         </div>
       </div>

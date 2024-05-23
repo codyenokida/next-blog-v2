@@ -24,6 +24,7 @@ declare global {
     thumbnailURL: string;
     title: string;
     preview: string;
+    index: number;
   }
 
   interface TagButtonProps {

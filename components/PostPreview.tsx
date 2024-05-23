@@ -12,6 +12,7 @@ export default async function PostPreview({
   thumbnailURL,
   title,
   preview,
+  index,
 }: PostPreviewProps) {
   const response = await fetch(thumbnailURL);
   const arrayBuffer = await response.arrayBuffer();
@@ -19,7 +20,14 @@ export default async function PostPreview({
   const { base64 } = await getPlaiceholder(Buffer.from(arrayBuffer));
 
   return (
-    <Link className={styles.item} key={id} href={`/post/${id}`}>
+    <Link
+      className={styles.item}
+      key={id}
+      href={`/post/${id}`}
+      style={{
+        animation: `fadeIn ${0.25 + (1 + index) * 0.15}s ease-in-out;`,
+      }}
+    >
       <div className={styles.image}>
         <Image
           src={thumbnailURL}
