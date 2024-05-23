@@ -25,7 +25,7 @@ export default async function PostPreview({
       key={id}
       href={`/post/${id}`}
       style={{
-        animation: `fadeIn ${0.25 + (1 + index) * 0.15}s ease-in-out;`,
+        animationDuration: `${0.3 + (1 + index) * 0.2}s`,
       }}
     >
       <div className={styles.image}>

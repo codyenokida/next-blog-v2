@@ -22,7 +22,7 @@ export default async function Page() {
         playing soccer, surfing at Newport Beach, and focusing on learning.
       </p>
       <p>
-        <strong>Day Job:</strong> None at the moment
+        <strong>Day Job:</strong> Freelancing
       </p>
       <p>
         <strong>Current Interests:</strong> Philosophy, Crypto, Coding, Indie
