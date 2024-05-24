@@ -48,7 +48,7 @@ export default function Header({ tag = "" }: HeaderProps) {
       </div>
       <div className={styles.utilities}>
         <Link className={styles.now} href="/now">
-          What I&apos;m doing <strong>now</strong> 🗺️📍
+          What I&apos;m doing <strong>now?</strong> 🗺️📍
         </Link>
         <div className={styles.divider} />
         <SetThemeButton />
