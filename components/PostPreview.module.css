@@ -54,13 +54,13 @@
 }
 
 @keyframes fadeIn {
-  from {
+  0% {
     opacity: 0;
-    margin-top: 70px;
+    transform: translateY(50px);
   }
 
-  to {
+  100% {
     opacity: 1;
-    margin-top: 0px;
+    transform: translateY(0px);
   }
 }
