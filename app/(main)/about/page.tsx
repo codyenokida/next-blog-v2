@@ -34,8 +34,8 @@ export default async function Page() {
         </p>
         <p>
           I&apos;m most known by my friends for{" "}
-          <Link href="/post/vietnam-one">biking SE Asia</Link>, being unable to
-          handle spice, loving{" "}
+          <Link href="/category/bicycle">biking in random places</Link>, being
+          unable to handle spicy food, loving{" "}
           <Link href="https://www.memedroid.com/memes/detail/4057032/One-Piece-live-action-actors">
             One Piece
           </Link>
