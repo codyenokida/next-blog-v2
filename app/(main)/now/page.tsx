@@ -28,7 +28,7 @@ export default async function Page() {
           the GF!
           <br />
           <br />
-          Just got back home to Irvine. Cooking up for what's up next!
+          Just got back home to Irvine. Cooking up for what&apos;s up next!
         </p>
         <p>
           <strong>Location:</strong> Irvine, CA
