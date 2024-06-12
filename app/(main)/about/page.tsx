@@ -18,9 +18,8 @@ export default async function Page() {
           <i>Kota Cody Enokida</i>
         </p>
         <p>
-          I&apos;m 24 years old. A Software Developer. I work mostly on the web
-          and am extremely driven to learn. Trying to improve my skills in the
-          intersection between tech and design! 🐣
+          I&apos;m 24 years old. A Software Developer. I work mostly on the web.
+          I like trying out new things and making new memories!
         </p>
         <p>
           I graduated from the University of California, Irvine with
@@ -28,9 +27,6 @@ export default async function Page() {
           <Link href="https://c3.ai/">C3 AI</Link>,{" "}
           <Link href="https://www.beyond.ai/">Beyond Limits AI</Link>, and
           contributed to <Link href="https://www.airswap.io/">AirSwap</Link>.
-        </p>
-        <p>
-          I love going outside and feeling the fresh air and sun on my body. 🌱
         </p>
         <p>
           I&apos;m most known by my friends for{" "}
@@ -55,12 +51,14 @@ export default async function Page() {
           height={250}
         />
         <br />
+        <br />
         <Image
           src="/filby2.jpeg"
           alt="Filbert is a funny bunny"
           width={250}
           height={250}
         />
+        <br />
         <br />
       </div>
 

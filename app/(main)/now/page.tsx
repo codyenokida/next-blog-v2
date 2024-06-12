@@ -26,9 +26,12 @@ export default async function Page() {
           Northwest. Love the greenness and uniqueness of Oregon. Reading more
           blogs and writing some of my own thoughts. Spending lots of time with
           the GF!
+          <br />
+          <br />
+          Just got back home to Irvine. Cooking up for what's up next!
         </p>
         <p>
-          <strong>Location:</strong> San Jose, CA
+          <strong>Location:</strong> Irvine, CA
         </p>
         <p>
           <strong>Day Job:</strong> Not Applicable
@@ -37,7 +40,7 @@ export default async function Page() {
           <strong>Interests:</strong> Reading, Philosophy, Cryptocurrencies,
           Coding, Indie Internet Content
         </p>
-        <p className={styles.date}>Last updated: 6/07/2024</p>
+        <p className={styles.date}>Last updated: 6/11/2024</p>
         <p>~~~~~~~~</p>
         <p>
           Inspiration from{" "}

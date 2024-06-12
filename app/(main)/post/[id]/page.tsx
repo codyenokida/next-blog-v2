@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next/types";
 
 import { getBlogPostPreview, getPostFromId } from "@/lib/firebase/firestore";
 
@@ -40,6 +41,18 @@ const SetThemeButton = dynamic(() => import("@/components/SetThemeButton"), {
 const Comments = dynamic(() => import("@/components/Comments"), {
   ssr: false,
 });
+
+export async function generateMetadata(
+  { params: { id } }: PageProps,
+  _parent: ResolvingMetadata
+): Promise<Metadata> {
+  // fetch data
+  const product = (await getPostFromId(id)) || ({} as BlogPostData);
+
+  return {
+    title: product.title || "A Small Peek into my Life.",
+  };
+}
 
 export default async function Page({ params: { id } }: PageProps) {
   const post = (await getPostFromId(id)) || ({} as BlogPostData);
